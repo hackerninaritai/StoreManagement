@@ -12,4 +12,6 @@ public interface BillService {
 	List<Bill> findAllByBillId(Integer billId);
 	
 	public String findOne();
+
+	int deleteOne(Integer id);
 }

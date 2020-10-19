@@ -19,4 +19,7 @@ public interface BillMapper {
 	@SelectProvider(type = ComplicateSql.class, method = "select1")
 	public String findOne();
 
+	@SelectProvider(type = ComplicateSql.class, method = "deleteOne")
+	public int deleteOne(Integer id);
+
 }

@@ -13,4 +13,13 @@ public class ComplicateSql {
 			}
 		}.toString();
 	}
+
+	public String deleteOne() {
+		return new SQL() {
+			{
+				DELETE_FROM("bill_item");
+				WHERE("bill_item_id=#{{billItemId}}");
+			}
+		}.toString();
+	}
 }

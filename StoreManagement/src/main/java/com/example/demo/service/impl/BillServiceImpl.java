@@ -55,4 +55,9 @@ public class BillServiceImpl implements BillService {
 		return billMapper.findOne();
 	}
 
+	@Override
+	public int deleteOne(Integer id) {
+		return billMapper.deleteOne(id);
+	}
+
 }
