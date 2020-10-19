@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.dao.BillMapper">
+	<!--<cache /> -->
+	<resultMap id="baseResultMap"
+		type="com.example.demo.domain.Bill">
+		<id column="bill_id" property="billId" jdbcType="INTEGER" />
+		<result column="bill_total" property="billTotal"
+			jdbcType="FLOAT" />
+		<result column="customer_current_discount"
+			property="customerCurrentDiscount" jdbcType="FLOAT" />
+		<association property="customer" column="customer_id"
+			javaType="Customer" resultMap="customerResult" />
+		<collection property="billItem" javaType="List"
+			ofType="BillItem">
+			<id property="billItemId" column="bill_item_id" />
+			<result property="quantity" column="item_quantity" />
+			<result property="itemId" column="item_id" />
+			<result property="itemName" column="item_name" />
+			<result property="itemSellingPrice"
+				column="item_selling_price" />
+		</collection>
+	</resultMap>
+
+	<resultMap id="customerResult"
+		type="com.example.demo.domain.Customer">
+		<id column="customer_id" property="customerId" jdbcType="INTEGER" />
+		<result column="customer_name" property="customerName"
+			jdbcType="VARCHAR" />
+		<result column="customer_discount_rate"
+			property="customerDiscountRate" jdbcType="FLOAT" />
+	</resultMap>
+
+	<select id="findAll" resultMap="baseResultMap">
+		SELECT i.*, b.*, bi.*, c.*
+		FROM
+		item i, bill b, bill_item bi, customer c
+		WHERE i.item_id = bi.item_id
+		AND bi.bill_id= b.bill_id
+		AND b.customer_id = c.customer_id
+	</select>
+
+	<insert id="insert" parameterType="Bill" useGeneratedKeys="true"
+		keyProperty="billId" keyColumn="bill_id">
+		INSERT INTO bill
+		(customer_id,customer_current_discount_rate)
+		VALUES
+		(#{customer.customerId},#{customer.customerDiscountRate})
+	</insert>
+
+</mapper>
