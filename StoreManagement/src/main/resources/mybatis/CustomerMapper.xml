@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.dao.CustomerMapper">
+	<!--<cache /> -->
+	<resultMap id="baseResultMap"
+		type="com.example.demo.domain.Customer">
+		<id column="customer_id" property="customerId" jdbcType="INTEGER" />
+		<result column="customer_name" property="customerName"
+			jdbcType="VARCHAR" />
+		<result column="customer_discount_rate"
+			property="customerDiscountRate" jdbcType="FLOAT" />
+	</resultMap>
+
+	<select id="findAll" resultMap="baseResultMap">
+		SELECT customer_id,
+		customer_name, customer_discount_rate FROM
+		Customer
+	</select>
+
+	<insert id="insert" parameterType="Item">
+		INSERT INTO customer
+		(customer_name, customer_discount_rate)
+		VALUES
+		(#{customerName},
+		#{customerDiscountRate});
+	</insert>
+
+	<select id="findByItemName" resultMap="baseResultMap"
+		parameterType="String">
+		<bind name="customerName"
+			value="'%' + _parameter.toString()+ '%'" />
+		SELECT customer_id,
+		customer_name, customer_discount_rate FROM
+		Customer
+		<where>
+			<if test="itemName != null">
+				AND customer_name LIKE #{customerName}
+			</if>
+		</where>
+	</select>
+
+</mapper>

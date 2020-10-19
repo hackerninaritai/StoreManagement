@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.dao.ItemMapper">
+	<!--<cache /> -->
+	<resultMap id="baseResultMap"
+		type="com.example.demo.domain.Item">
+		<id column="item_id" property="itemId" jdbcType="INTEGER" />
+		<result column="item_name" property="itemName"
+			jdbcType="VARCHAR" />
+		<result column="item_purchase_price"
+			property="itemPurchasePrice" jdbcType="FLOAT" />
+		<result column="item_selling_price" property="itemSellingPrice"
+			jdbcType="FLOAT" />
+		<result column="item_instock" property="itemInstock"
+			jdbcType="INTEGER" />
+	</resultMap>
+
+	<select id="findAll" resultMap="baseResultMap">
+		SELECT item_id,item_name,
+		item_purchase_price ,item_selling_price, item_instock FROM
+		item
+	</select>
+
+	<insert id="insert" parameterType="Item">
+		INSERT INTO item (item_name,
+		item_purchase_price, item_selling_price, item_instock)
+		VALUES
+		(#{itemName}, #{itemPurchasePrice},
+		#{itemSellingPrice},
+		#{itemInstock});
+	</insert>
+
+	<select id="findByItemName" resultMap="baseResultMap"
+		parameterType="String">
+		<bind name="itemName" value="'%' + _parameter.toString()+ '%'" />
+		SELECT item_id,item_name,
+		item_purchase_price ,item_selling_price,
+		item_instock FROM
+		item
+		<where>
+			<if test="itemName != null">
+				AND item_name LIKE #{itemName}
+			</if>
+		</where>
+	</select>
+
+</mapper>
