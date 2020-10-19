@@ -10,4 +10,6 @@ public interface BillService {
 	List<Bill> findAll();
 
 	List<Bill> findAllByBillId(Integer billId);
+	
+	public String findOne();
 }

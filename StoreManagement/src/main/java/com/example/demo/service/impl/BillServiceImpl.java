@@ -2,17 +2,17 @@ package com.example.demo.service.impl;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.SelectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import com.example.demo.dao.BillItemMapper;
 import com.example.demo.dao.BillMapper;
 import com.example.demo.domain.Bill;
 import com.example.demo.service.BillService;
+import com.example.demo.sql.ComplicateSql;
 
 @Service
 public class BillServiceImpl implements BillService {
@@ -48,6 +48,11 @@ public class BillServiceImpl implements BillService {
 	@Override
 	public List<Bill> findAllByBillId(Integer billId) {
 		return billMapper.findAllByBillId(billId);
+	}
+
+	@Override
+	public String findOne() {
+		return billMapper.findOne();
 	}
 
 }

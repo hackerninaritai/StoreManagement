@@ -32,4 +32,9 @@ public class BillController {
 		return new ResponseEntity<Object>("id: " + id, HttpStatus.OK);
 	}
 
+	@GetMapping(path = "/123")
+	public ResponseEntity<?> findOne() {
+		return new ResponseEntity<Object>(billService.findOne(), HttpStatus.OK);
+	}
+
 }
