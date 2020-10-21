@@ -44,4 +44,13 @@
 		</where>
 	</select>
 
+	<select id="findByItemId" resultMap="baseResultMap"
+		parameterType="String">
+		<bind name="itemName" value="'%' + _parameter.toString()+ '%'" />
+		SELECT item_id,item_name,
+		item_purchase_price ,item_selling_price,
+		item_instock FROM
+		item WHERE item_id = #{itemId}
+	</select>
+
 </mapper>

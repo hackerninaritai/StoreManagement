@@ -12,4 +12,6 @@ public interface ItemService {
 
 	public List<Item> findByItemName(String itemName);
 
+	public List<Item> findByItemId(Integer itemId);
+
 }

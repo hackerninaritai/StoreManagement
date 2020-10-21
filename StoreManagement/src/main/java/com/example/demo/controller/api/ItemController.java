@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.demo.controller.api;
 
 import java.util.Optional;
 
@@ -24,16 +24,21 @@ public class ItemController {
 	@Autowired
 	private ItemService itemService;
 
-	@PostMapping(path = "/insert")
-	public ResponseEntity<?> insertItem(@RequestBody Item item) {
+	@PostMapping(path = "/save")
+	public ResponseEntity<?> saveItem(@RequestBody Item item) {
 		Integer returnCode = itemService.insert(item);
+		System.out.println("is called");
 		return new ResponseEntity<Object>("return code: " + returnCode, HttpStatus.OK);
 	}
 
 	@GetMapping(path = "")
-	public ResponseEntity<?> findByItemName(@RequestParam Optional<String> itemName) {
+	public ResponseEntity<?> findByItemName(@RequestParam Optional<String> itemName,
+			@RequestParam Optional<Integer> itemId) {
 		if (itemName.isPresent()) {
 			return new ResponseEntity<Object>(itemService.findByItemName(itemName.get()), HttpStatus.OK);
+		}
+		if (itemId.isPresent()) {
+			return new ResponseEntity<Object>(itemService.findByItemId(itemId.get()), HttpStatus.OK);
 		}
 		return new ResponseEntity<Object>(itemService.findAll(), HttpStatus.OK);
 	}

@@ -31,4 +31,9 @@ public class ItemServiceImpl implements ItemService {
 		return itemMapper.findByItemName(itemName);
 	}
 
+	@Override
+	public List<Item> findByItemId(Integer itemId) {
+		return itemMapper.findByItemId(itemId);
+	}
+
 }

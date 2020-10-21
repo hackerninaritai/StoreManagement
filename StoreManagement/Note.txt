@@ -1,0 +1,40 @@
+Assuming I have a Jquery function like below:
+$( "#itemModal" ).submit(function(event) {
+2		  event.preventDefault();
+3		  var form = document.querySelector('form');
+4		  var formData = new FormData(form);
+5		  var myData = JSON.stringify(Object.fromEntries(formData))
+6		  $.ajax({
+7				url : '/api/item/save',
+8				data: myData,
+9				contentType: "application/json",
+10				error : function(e) {
+11					$('#info').html('<p>An error has occurred</p>');
+12
+13					alert("error")
+14				},
+15				success : function(data) {
+16					console.log(myData)
+17				},
+18				type : 'POST'
+19			});
+20		});
+
+in line 
+1. I use event.preventDefault() to prevent the default action triggered when the user click the button submit
+2. Use document.querySelector('form') to get a form in the html file.
+What if the html file contains 2 forms?
+3. FormData(form) return an object
+4. JSON.Stringnify(Object.fromEntries(formData)) converts an onbject into a JSon string, we can send this String the server if it requires a requestBody as a parameters
+9: contentType: Because we send a Json string to the server, we must set contentType: "application/json".
+if we want to receive the json response from Server, the dataType property should be set as "json"
+Ref:
+	https://stackoverflow.com/questions/18701282/what-is-content-type-and-datatype-in-an-ajax-request/18701357#:~:text=contentType%20is%20the%20type%20of,%2C%20html%20%2C%20text%20%2C%20etc. :
+/*
+contentType When sending data to the server, use this content type.
+
+dataType The type of data that you're expecting back from the server. If none is specified, jQuery will try to infer it based on the MIME type of the response
+
+"text": A plain text string.
+*/
+

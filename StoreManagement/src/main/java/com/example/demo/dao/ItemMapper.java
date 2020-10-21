@@ -14,4 +14,6 @@ public interface ItemMapper {
 	public List<Item> findAll();
 
 	public List<Item> findByItemName(String itemName);
+
+	public List<Item> findByItemId(Integer itemId);
 }
